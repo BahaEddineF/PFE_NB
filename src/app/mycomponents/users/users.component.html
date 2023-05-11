@@ -1,0 +1,71 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <button type="button" class="btn btn-primary alignBtn" (click)="openModal()">Nouveau Utilisateur</button>
+      </div>
+        <div class="card">
+  
+            <div class="card-header card-header-success" >
+                <h3 class="card-title">Liste Utilisateurs </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">                     
+                            <table class="table">
+                                <thead >
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Prenom</th>
+                                    <th scope="col">Login</th>
+                                    <th scope="col">Date de naissance</th>
+                                    <th scope="col">Etat</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngFor="let utilisateur of listUtilisateurs;index as i">
+                                <tr>
+                                    <th scope="row">{{i}}</th>
+                                    <td>{{utilisateur.nom}}</td>
+                                    <td>
+                                        {{utilisateur.prenom}}
+                                    </td>
+                                    <td>{{utilisateur.login}}</td>
+                                    <td>{{utilisateur.dateDeNaissance | date:'dd-MM-yyyy'}}</td>
+                                    <td>
+                                        <span [ngStyle]="{'color':  utilisateur.active == true ? 'green' : 'red'}">
+                                            {{ utilisateur.active == true? 'Active'  : 'Bloqué' }}
+                                        </span>
+                                      </td>
+                                    <td>
+                                        <i class="material-icons" style="color: green;"  (click)="openModalUpdateUtilisateur(utilisateur.id)"  >edit</i>
+                                        <i *ngIf="utilisateur.active == true" class="material-icons" style="color: red;"  (click)="openModalBlockUtilisateur(utilisateur.id)"  >lock</i>
+                                        <i *ngIf="utilisateur.active == false" class="material-icons" style="color: red;"  (click)="openModalUnBlockUtilisateur(utilisateur.id)"  >lock_open</i>
+
+                                    </tr>
+                              
+                                </tbody>
+                            </table>
+                </div>              
+        </div>
+    </div>
+    <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" >
+          <div class="modal-content">
+            <div class="modal-header" >
+              <h5 *ngIf="action == 'block'" class="modal-title" id="exampleModalLabel">Vous voulez vraiment bloquer cet utilisateur ?</h5>
+              <h5 *ngIf="action == 'unblock'" class="modal-title" id="exampleModalLabel">Vous voulez vraiment débloquer cet utilisateur ?</h5>
+
+              <button type="button" #modalClose class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+   
+            <div class="modal-footer">
+                <button *ngIf="action=='block'"  type="button" class="btn btn-danger" (click)="blockUser()">Bloquer</button>
+                <button *ngIf="action=='unblock'"  type="button" class="btn btn-danger" (click)="unblockUser()">Débloquer</button>
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Annuler</button>
+            </div>
+          </div>
+        </div>
+      </div>

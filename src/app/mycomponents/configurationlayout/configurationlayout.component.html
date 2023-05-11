@@ -1,0 +1,124 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <button type="button" class="btn btn-primary alignBtn" (click)="openModal()">Nouveau Configuration </button>
+      </div>
+      <div class="card">
+          <div class="card-header card-header-success">
+              <h2 class="card-title">List Configurations :</h2>
+            </div>
+            <div class="card-body">
+                  <div class="row">
+                    <table class="table">
+                      <thead >
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">SMTP Server </th>
+                            <th scope="col">Port </th>
+                            <th scope="col">URL </th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let config of listConfigurations;index as i">
+                          <tr>
+                            <th scope="row">{{i+1}}</th>
+                            <td   style="width: 25%;" >{{config.smtpserver}}</td>
+                            <td  style="width: 25%;">{{config.port}}</td>
+                            <td    style="width: 25%;"style="overflow: auto;">{{config.url}}</td>
+                          <i class="material-icons" style="color: green;"  (click)="openModalUpdateConfig(config.id)" >update</i>
+                          <i class="material-icons" style="color: red;" (click)="onIconClickDelete(config.id)" >delete</i>
+                          </tr>
+                        </tbody>
+                      </table>
+               
+                  </div>
+              </div>
+          </div>
+      </div>
+ <!-- Modal new config  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajouter Configuration</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #formConfig="ngForm" (ngSubmit) = "addConfiguration()" >
+                <div class="form-group">
+                  <label for="exampleInputsmtp">Smtp Server</label>
+                  <input type="text" [(ngModel)]="registerConfigData.smtpserver" required name="smtpserver" class="form-control" id="exampleInputsmtp" aria-describedby="smtp" placeholder="Enter smtp server">
+                 
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPort">Port</label>
+                  <input type="number" [(ngModel)]="registerConfigData.port" required name="port"  class="form-control" id="exampleInputPort" placeholder="Num Port">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputURL">URL</label>
+                    <input type="text" [(ngModel)]="registerConfigData.url" required name="url"  class="form-control" id="exampleInputURL" placeholder="URL smtp">
+                  </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+              </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!-- Modal update config  -->
+<div *ngIf="configForUpdate" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifer Configuration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+      <form #formUpdateConfig="ngForm" (ngSubmit) = "updateConfiguration()">
+        <div class="form-group">
+          <label for="exampleInputsmtp">Smtp Server</label>
+          <input type="text" [(ngModel)]="configForUpdate.smtpserver" required name="smtpserver" class="form-control" id="exampleInputsmtp" aria-describedby="smtp" >
+         
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPort">Port</label>
+          <input type="number" [(ngModel)]="configForUpdate.port" required name="port"  class="form-control" id="exampleInputPort">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputURL">URL</label>
+            <input type="text" [(ngModel)]="configForUpdate.url" required name="url"  class="form-control" id="exampleInputURL" >
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
