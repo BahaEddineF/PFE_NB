@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { UpadateUseComponent } from './upadate-use/upadate-use.component';
 import { NgChartsModule } from 'ng2-charts';
 import { UpdateUtilisateurComponent } from './mycomponents/update-utilisateur/update-utilisateur.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { UpdateUtilisateurComponent } from './mycomponents/update-utilisateur/up
     AppRoutingModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
-    NgChartsModule
+    NgChartsModule,
+    CKEditorModule
 
   ],
   declarations: [

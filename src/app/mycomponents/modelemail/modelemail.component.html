@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputcontenu">Contenu du modele :</label>
-                     <ckeditor [(ngModel)]="registerModeleData.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
+                     <ckeditor #myckeditor    name="myckeditor" [(ngModel)]="registerModeleData.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
                    
                 </div>
                 <div class="form-group">
@@ -99,7 +99,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputcontenu">Contenu du modele :</label>
-                     <ckeditor [(ngModel)]="modeleForUpdate.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
+                     <ckeditor #myckeditor   name="myckeditor"  [(ngModel)]="modeleForUpdate.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
                    
                 </div>
                 <div class="form-group">
@@ -115,4 +115,6 @@
               </form>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
     </div>
+  </div>
+  </div>
   </div>

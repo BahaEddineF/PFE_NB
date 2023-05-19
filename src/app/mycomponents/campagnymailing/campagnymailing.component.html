@@ -4,384 +4,419 @@
       <button type="button" class="btn btn-primary alignBtn" (click)="openModal()">Nouveau Campagne</button>
 
     </div>
-      <div class="card">
+    <div class="card">
 
-          <div class="card-header card-header-success" >
-              <h3 class="card-title">Liste Campagny Mailling </h3>
+      <div class="card-header card-header-success">
+        <h3 class="card-title">Liste Campagny Mailling </h3>
+      </div>
+      <div class="card-body">
+
+        <div class="row">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Destinataire</th>
+                <th scope="col">ModeEnvoi</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let compagny of listCompagny;index as i">
+              <tr>
+                <th scope="row">{{i}}</th>
+                <td>{{compagny.nom}}</td>
+                <td>
+                  {{compagny.destinataire}}
+                </td>
+                <td>{{compagny.modeEnvoie}}</td>
+                <td>
+                  <span [ngStyle]="{'color': compagny.etat == 0 ? 'orange' : compagny.etat == 1 ? 'green' : 'red'}">
+                    {{ compagny.etat == 0 ? 'Encours' : compagny.etat == 1 ? 'Envoyé' : 'Suspendu' }}
+                  </span>
+                </td>
+                <td>
+                  <i class="material-icons" style="color: green;"
+                    (click)="openModalUpdateCompagny(compagny.id)">visibility</i>
+                  <i class="material-icons" style="color: green;"
+                    (click)="openModalUpdateCompagny(compagny.id)">edit</i>
+                  <i class="material-icons" style="color: red;" (click)="openDeleteModal(compagny.id)">delete</i>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal new compagny  -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter Compagny</h5>
+
           </div>
-          <div class="card-body">
-        
-              <div class="row">
-                                              
-                          <table class="table">
-                              <thead >
-                              <tr>
-                                  <th scope="col">ID</th>
-                                  <th scope="col">Nom</th>
-                                  <th scope="col">Destinataire</th>
-                                  <th scope="col">ModeEnvoi</th>
-                                  <th scope="col">Etat</th>
-                                  <th scope="col">Action</th>
-                              </tr>
-                              </thead>
-                              <tbody *ngFor="let compagny of listCompagny;index as i">
-                              <tr>
-                                  <th scope="row">{{i}}</th>
-                                  <td>{{compagny.nom}}</td>
-                                  <td>
-                                      {{compagny.destinataire}}
-                                  </td>
-                                  <td>{{compagny.modeEnvoie}}</td>
-                                  <td>
-                                      <span [ngStyle]="{'color': compagny.etat == 0 ? 'orange' : compagny.etat == 1 ? 'green' : 'red'}">
-                                          {{ compagny.etat == 0 ? 'Encours' : compagny.etat == 1 ? 'Envoyé' : 'Suspendu' }}
-                                      </span>
-                                    </td>
-                                  <td>
-                                      <i class="material-icons" style="color: green;"  (click)="openModalUpdateCompagny(compagny.id)"  >edit</i>
-                                      <i class="material-icons" style="color: red;" (click)="openDeleteModal(compagny.id)"   >delete</i>
-                              </tr>
-                            
-                              </tbody>
-                          </table>
-              </div>
-
-              
-      </div>
-  </div>
-
-  
-<!-- Modal new compagny  -->
-<div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" >
-    <div class="modal-content">
-      <div class="modal-header" >
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter Compagny</h5>
-        <button type="button" #modalClose class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <form [formGroup]="formAddCompagneMailing" (ngSubmit) = "addCompagny()">
-        
-              <div class="form-group">
-                  <div class="row">
-                      <div class="col-sm-4"> <label for="exampleInputnom">Nom Compagny :</label></div> 
-                      <div class="col-sm-8">
-                          <input type="text" formControlName="nom"  [ngClass]="{ 'is-invalid': submitted && nom.errors}"
-                          [(ngModel)]="registerCompagnyData.nom"  name="nom" class="form-control"
-                           id="exampleInputnom" aria-describedby="nom" placeholder="Enter nom compagny Mailling">
-                          <div *ngIf="submitted && nom.errors" class="invalid-feedback">
-                            <div *ngIf="nom.errors.required">* Nom Compagne est obligatoire</div>
-                         </div>
-                        </div>
-                  </div>
-              </div>
-              
-              <div class="form-group">
-                  <div class="row">
-                      <div class="col-sm-4">  <label for="exampleInputdestinataire">Destination :</label></div> 
-                      <div class="col-sm-8">
-                          <input type="text" formControlName="destinataire"  [ngClass]="{ 'is-invalid': submitted && destinataire.errors}"
-                          [(ngModel)]="registerCompagnyData.destinataire" required name="destinataire" class="form-control" id="exampleInputdestinataire" aria-describedby="destinataire" placeholder="Enter destinataire">
-                          <div *ngIf="submitted && destinataire.errors" class="invalid-feedback">
-                            <div *ngIf="destinataire.errors.required">* Destination est obligatoire</div>
-                         </div>
-                        </div>
-                  </div>
-              </div>
+          <div class="modal-body">
+            <form [formGroup]="formCompagneMailing" (ngSubmit)="saveCompagny()">
 
               <div class="form-group">
-                  <div class="row">
-                      <div class="col-sm-4">  <label for="exampleInputemail">Email :</label></div> 
-                      <div class="col-sm-8">
-                          <input type="text" formControlName="email"  [ngClass]="{ 'is-invalid': submitted && email.errors}"
-                          [(ngModel)]="registerCompagnyData.email" required name="email" class="form-control" 
-                          id="exampleInputemail" aria-describedby="email" placeholder="Enter email">
-                          <div *ngIf="submitted && email.errors" class="invalid-feedback">
-                            <div *ngIf="email.errors.required">* Email est obligatoire</div>
-                         </div>
-                        </div>
-                  </div>
-                
-                 
-              </div>
-         
-              <div class="form-group">
-               <div class="row">
-                  <div class="col-sm-4">  <label for="exampleInputconfig">Configuration :</label></div>
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputnom">Nom Compagny :</label></div>
                   <div class="col-sm-8">
-                      <select id="exampleInputconfig"  formControlName="configuration"  [ngClass]="{ 'is-invalid': submitted && configuration.errors}"
-                      name="config" class="form-control"
-                      [(ngModel)]="registerCompagnyData.configuration.id" >
-                          <option value=""  selected>Choisir une configuration</option>
-                          <option *ngFor="let config of listConfigurations" [value]="config.id">{{config.smtpserver}}</option>
-                        </select>
-                        <div *ngIf="submitted && configuration.errors" class="invalid-feedback">
-                          <div *ngIf="configuration.errors.required">* Configuration est obligatoire</div>
-                       </div>
+                    <input type="text" formControlName="nom" [ngClass]="{ 'is-invalid': submitted && nom.errors}"
+                      [(ngModel)]="registerCompagnyData.nom" name="nom" class="form-control" id="exampleInputnom"
+                      aria-describedby="nom" placeholder="Enter nom compagny Mailling">
+                    <div *ngIf="submitted && nom.errors" class="invalid-feedback">
+                      <div *ngIf="nom.errors.required">* Nom Compagne est obligatoire</div>
+                    </div>
                   </div>
-               </div>
-                
-                 
+                </div>
               </div>
 
               <div class="form-group">
-                  <div class="row"> 
-                      <div class="col-sm-4">
-                          <label for="exampleInputmodele">Modele Mail :</label>
-                      </div>
-                      <div class="col-sm-8">
-                          <select formControlName="modele"  [ngClass]="{ 'is-invalid': submitted && modele.errors}"
-                           id="exampleInputmodele"   name="modele"class="form-control" 
-                          [(ngModel)]="registerCompagnyData.modele.id" >
-                              <option selected>Choisir un modele</option>
-                              <option *ngFor="let modele of listModeles" [value]="modele.id">{{modele.nom}}</option>
-                            </select>
-                            <div *ngIf="submitted && modele.errors" class="invalid-feedback">
-                              <div *ngIf="modele.errors.required">* Modele Mail est obligatoire</div>
-                           </div>
-                      </div>
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputdestinataire">Destination :</label></div>
+                  <div class="col-sm-8">
+                    <select formControlName="destinataire"
+                    [ngClass]="{ 'is-invalid': submitted && destinataire.errors}"
+                    [(ngModel)]="registerCompagnyData.destinataire" required name="destinataire" class="form-control" >
+                    <option value="null" selected disabled>Séléctionner</option>
+                    <option *ngFor="let role of roles " [value]="role.libelle">{{role.libelle}}</option>
+                    </select>
+                    <div *ngIf="submitted && destinataire.errors" class="invalid-feedback">
+                      <div *ngIf="destinataire.errors.required">* Destination est obligatoire</div>
+                    </div>
                   </div>
-                 
-                    
+                </div>
               </div>
 
               <div class="form-group">
-               
-                  <label for="exampleInputmodenvoie">Mode d'envoie :</label>
-                  <div class="row">
-                      <div class="col-sm-4"> 
-                         <input type="radio" (change)="updateFormControl()" formControlName="mode"  [ngClass]="{ 'is-invalid': submitted && mode.errors}"
-                         id="exampleInputSynchrone" name="synchrone" [(ngModel)]="registerCompagnyData.modeEnvoie" value="Synchrone">
-                          <label for="exampleInputSynchrone" style=" margin-left: 20px;">Synchrone</label>
-                      </div>
-                      <div class="col-sm-8"> 
-                        <input type="radio" formControlName="mode" (change)="updateFormControl()" [ngClass]="{ 'is-invalid': submitted && mode.errors}"
-                        id="exampleInputAsynchrone" name="asynchrone" [(ngModel)]="registerCompagnyData.modeEnvoie" value="Asynchrone">
-                          <label for="exampleInputAsynchrone" style=" margin-left: 20px;" >Asynchrone</label>
-                      </div>
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputemail">Email :</label></div>
+                  <div class="col-sm-8">
+                    <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && email.errors}"
+                      [(ngModel)]="registerCompagnyData.email" required name="email" class="form-control"
+                      id="exampleInputemail" aria-describedby="email" placeholder="Enter email">
+                    <div *ngIf="submitted && email.errors" class="invalid-feedback">
+                      <div *ngIf="email.errors.required">* Email est obligatoire</div>
+                    </div>
                   </div>
-                  
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputconfig">Configuration :</label></div>
+                  <div class="col-sm-8">
+                    <select id="exampleInputconfig" formControlName="configuration"
+                      [ngClass]="{ 'is-invalid': submitted && configuration.errors}" name="config" class="form-control"
+                      [(ngModel)]="registerCompagnyData.configuration.id">
+                      <option value="" selected>Choisir une configuration</option>
+                      <option *ngFor="let config of listConfigurations" [value]="config.id">{{config.smtpserver}}
+                      </option>
+                    </select>
+                    <div *ngIf="submitted && configuration.errors" class="invalid-feedback">
+                      <div *ngIf="configuration.errors.required">* Configuration est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="exampleInputmodele">Modele Mail :</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <select formControlName="modele" [ngClass]="{ 'is-invalid': submitted && modele.errors}"
+                      id="exampleInputmodele" name="modele" class="form-control"
+                      [(ngModel)]="registerCompagnyData.modele.id">
+                      <option selected>Choisir un modele</option>
+                      <option *ngFor="let modele of listModeles" [value]="modele.id">{{modele.nom}}</option>
+                    </select>
+                    <div *ngIf="submitted && modele.errors" class="invalid-feedback">
+                      <div *ngIf="modele.errors.required">* Modele Mail est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+
+                <label for="exampleInputmodenvoie">Mode d'envoie :</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <input type="radio" (change)="updateFormControl()" formControlName="mode"
+                      [ngClass]="{ 'is-invalid': submitted && mode.errors}" id="exampleInputSynchrone" name="synchrone"
+                      [(ngModel)]="registerCompagnyData.modeEnvoie" value="Synchrone">
+                    <label for="exampleInputSynchrone" style=" margin-left: 20px;">Synchrone</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="radio" formControlName="mode" (change)="updateFormControl()"
+                      [ngClass]="{ 'is-invalid': submitted && mode.errors}" id="exampleInputAsynchrone"
+                      name="asynchrone" [(ngModel)]="registerCompagnyData.modeEnvoie" value="Asynchrone">
+                    <label for="exampleInputAsynchrone" style=" margin-left: 20px;">Asynchrone</label>
+                  </div>
+                </div>
+
               </div>
               <div *ngIf="registerCompagnyData.modeEnvoie === 'Asynchrone'">
-                  <hr>
-                  <h2>Planification</h2>
-                  <div class="form-group">
-                      <div class="row">
-                          <div class="col-sm-4">  <label for="exampleInputdateenv">Date d'envoie :</label></div> 
-                          <div class="col-sm-8">
-                              <input type="date" formControlName="dateEnvoie" [ngClass]="{ 'is-invalid': submitted && dateEnvoie.errors}"
-                        [(ngModel)]="registerCompagnyData.planification.dateenv "  name="dateen"
-                         class="form-control" id="exampleInputdateen" aria-describedby="dateen" placeholder="Enter date envoie">
-                         <div *ngIf="submitted && dateEnvoie.errors" class="invalid-feedback">
-                          <div *ngIf="dateEnvoie.errors.required">* Date d'envoie est obligatoire</div>
-                       </div>
-                        </div>
+                <hr>
+                <h2>Planification</h2>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-4"> <label for="exampleInputdateenv">Date d'envoie :</label></div>
+                    <div class="col-sm-8">
+                      <input type="datetime-local" formControlName="dateEnvoie"
+                      [ngClass]="{ 'is-invalid': submitted && dateEnvoie.errors}"
+                      [ngModel]="registerCompagnyData.planification.dateenv | date:'yyyy-MM-ddTHH:mm'"
+                      (ngModelChange)="registerCompagnyData.planification.dateenv=$event" name="dateen"
+                      class="form-control" id="exampleInputdateen" aria-describedby="dateen"
+                      placeholder="Enter date envoie">
+                      <div *ngIf="submitted && dateEnvoie.errors" class="invalid-feedback">
+                        <div *ngIf="dateEnvoie.errors.required">* Date d'envoie est obligatoire</div>
                       </div>
-                  
-              </div>
-          
+                    </div>
+                  </div>
 
-                  <div class="form-group">
-                      <div class="row">
-                          <div class="col-sm-4">  <label for="exampleInputdateenv">Nombre de repetition :</label></div> 
-                          <div class="col-sm-8">
-                              <input type="number" formControlName="repetition" [ngClass]="{ 'is-invalid': submitted && repetition.errors}"
-                               [(ngModel)]="registerCompagnyData.planification.repetetion" 
-                               name="repetition" class="form-control" id="exampleInputrepetition" aria-describedby="repetition" 
-                               placeholder="Enter nombre repetition d'envoie">
-                               <div *ngIf="submitted && repetition.errors" class="invalid-feedback">
-                                <div *ngIf="repetition.errors.required">* Nombre de repetition est obligatoire</div>
-                             </div>
-                          </div>
-                      </div>
-                  
-                      </div>
+                </div>
 
-              <hr>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-4"> <label for="exampleInputdateenv">Nombre de repetition :</label></div>
+                    <div class="col-sm-8">
+                      <input type="number" formControlName="repetition"
+                        [ngClass]="{ 'is-invalid': submitted && repetition.errors}"
+                        [(ngModel)]="registerCompagnyData.planification.repetetion" name="repetition"
+                        class="form-control" id="exampleInputrepetition" aria-describedby="repetition"
+                        placeholder="Enter nombre repetition d'envoie">
+                      <div *ngIf="submitted && repetition.errors" class="invalid-feedback">
+                        <div *ngIf="repetition.errors.required">* Nombre de repetition est obligatoire</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <hr>
               </div>
-             
+
               <button type="submit" class="btn btn-primary">Submit</button>
-       </form>
+              <button type="button" #modalClose class="btn btn-danger" data-dismiss="modal">Fermer</button>
+
+            </form>
 
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
- <!-- Modal update campagny  -->
-<div *ngIf="updateForCompagny" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" #exampleModalUpdate aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document"  style="  max-width: none; width: 70%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Détails Compagny Mailling</h5>
-        
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <div class="container-fluid">
-            <span [ngStyle]="{'color': updateForCompagny.etat == 0 ? 'yellow' : updateForCompagny.etat == 1 ? 'green' : 'red'}">
-              {{ updateForCompagny.etat == 0 ? 'Encours' : updateForCompagny.etat == 1 ? 'Envoyé' : 'Suspendu' }}
-          </span>
-              
-                    
-                              <form #formCompagnyUp="ngForm" (ngSubmit) = "updateCompagny()" >
-                                  <div class="row">
-                                     
-                                      <div class="col-sm-3">
-                                          <mat-form-field class="example-full-width">
-                                            <input matInput placeholder="Nom :" [(ngModel)]="updateForCompagny.nom" name="nom" id="nom" type="text">
-                                          </mat-form-field>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <mat-form-field class="example-full-width">
-                                            <input matInput placeholder="Email :" type="email" [(ngModel)]="updateForCompagny.email" name="email" id="email" type="text" >
-                                          </mat-form-field>
-                                      </div>
-                                      <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                            <input matInput type="text" placeholder="Destinataire :"  [(ngModel)]="updateForCompagny.destinataire"  name="destinataire" id="destinataire" type="text">
-                                          </mat-form-field>
-                                      </div>
-                                  </div>
-                                 
-                                <div class="row">
-                                  <div class="col-sm-4">
-                                    <input type="radio" name="modeEnvoie" id="Synchrone" [checked]="updateForCompagny.modeEnvoie === 'Synchrone'" (change)="updateForCompagny.modeEnvoie = 'Synchrone'">
-                                    <label class="form-check-label" style="margin-left: 20px;" for="Synchrone">Synchrone</label>
-                                  </div>
-                                  <div class="col-sm-4">
-                                    <input type="radio" name="modeEnvoie" id="Asynchrone" [checked]="updateForCompagny.modeEnvoie === 'Asynchrone'" (change)="updateForCompagny.modeEnvoie = 'Asynchrone'">
-                                    <label class="form-check-label" style="margin-left: 20px;" for="Asynchrone">Asynchrone</label>
-                                  </div>
-                                </div>
-                            <hr>
-                                <div class="row">
-                                  <div class="col-sm-4">
-                                    <label for="exampleInputconfig2">Configuration :</label>
-                                  </div>
-                                  <div class="col-sm-8">
-                                    <select name="configSelect" class="form-control"  [(ngModel)]="updateForCompagny.configuration.id"  >
-                                  
-                                      <option *ngFor="let config of listConfigurationsForUpdate" [value]="config.id" >{{config.smtpserver}}</option>
-                                   
-                                     
-                                    </select>
-                                  </div>
-                                </div>
-                                <hr>
-                                  <div class="row">
-                                      <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                          <input matInput name="portnum" id="portnum" placeholder="Port" type="number"  [(ngModel)]="updateForCompagny.configuration.port"disabled >
-                                        </mat-form-field>
-                                      </div>
-                                      <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                          <input matInput placeholder="Smtp Server" name="Smtp" id="Smtp" type="text"[(ngModel)]="updateForCompagny.configuration.smtpserver" disabled >
-                                        </mat-form-field>
-                                      </div>
-                                      <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                          <input matInput placeholder="URL" name="url" id="url" type="text" [(ngModel)]="updateForCompagny.configuration.url" disabled>
-                                        </mat-form-field>
-                                      </div>
-                                  </div>
-
-
-                                  <div class="row">Modele de l'email :</div>
-                                  <div class="row">
-                                    <div class="col-sm-3">
-                                   
-                                
-
-                                      <mat-form-field class="example-full-width">
-                                        <select name="modeleSelect" class="form-control"  [(ngModel)]="updateForCompagny.modele.id">
-                                          <option *ngFor="let mod of listModelesForUpdate" [value]="mod.id" [selected]="mod.id === updateForCompagny.modele.id">{{mod.nom}}</option>
-                                        </select>
-                                     
-                                      </mat-form-field>
-                                  
-                                  </div>
-                                  </div>
-                                  <!--Modele-->
-                                  <div class="row">
-                                    <div class="col-sm-4">Sujet :</div>
-                                    <div class="col-sm-8" >{{updateForCompagny.modele.sujet}}</div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-4">Contenu :</div>
-                                    
-                                    <div class="col-lg-12" [innerHTML]="updateForCompagny.modele.contenu"></div>
-                                   <!-- <div class="col">{{updateForCompagny.modele.contenu}}</div> -->
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-sm-4">Signature :</div>
-                                    <div class="col-sm-8">{{updateForCompagny.modele.signature}}</div>
-                                  </div>
-
-
-
-
-
-
-
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                        <label>About Me</label>
-                                        <mat-form-field class="example-full-width">
-                                           <textarea matInput placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>
-                                         </mat-form-field>
-                                          <!-- <div class="form-group">
-        
-                                              <div class="form-group">
-                                                  <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                                  <textarea class="form-control" rows="5"></textarea>
-                                              </div>
-                                          </div> -->
-                                      </div>
-                                  </div>
-                                  <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
-                                  <div class="clearfix"></div>
-                              </form>
-              
-                
-            
           </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
 
-<div class="modal fade"  id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" >
-    <div class="modal-content">
-      <div class="modal-header" >
-        <h5  class="modal-title" id="exampleModalLabel">Vous voulez vraiment supprimer cette campagne mailing ?</h5>
-
-        <button type="button" #modalDeleteClose class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-footer">
-          <button   type="button" class="btn btn-danger" (click)="deleteCampagneMailing()">Supprimer</button>
-
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Annuler</button>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+
+    <!-- Modal update campagny  -->
+    <div class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" #exampleModalUpdate
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="  max-width: none; width: 70%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modifier Compagny Mailling</h5>
+
+
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formCompagneMailing" (ngSubmit)="saveCompagny()">
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputnom">Nom Compagny :</label></div>
+                  <div class="col-sm-8">
+                    <input type="text" formControlName="nom" [ngClass]="{ 'is-invalid': submitted && nom.errors}"
+                      [(ngModel)]="registerCompagnyData.nom" name="nom" class="form-control" id="exampleInputnom"
+                      aria-describedby="nom" placeholder="Enter nom compagny Mailling">
+                    <div *ngIf="submitted && nom.errors" class="invalid-feedback">
+                      <div *ngIf="nom.errors.required">* Nom Compagne est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputdestinataire">Destination :</label></div>
+                  <div class="col-sm-8">
+
+                    <select formControlName="destinataire"
+                    [ngClass]="{ 'is-invalid': submitted && destinataire.errors}"
+                    [(ngModel)]="registerCompagnyData.destinataire" required name="destinataire" class="form-control" >
+                    <option value="null" selected disabled>Séléctionner</option>
+                    <option *ngFor="let role of roles" [value]="role.libelle">{{role.libelle}}</option>
+                    </select>
+         
+                    <div *ngIf="submitted && destinataire.errors" class="invalid-feedback">
+                      <div *ngIf="destinataire.errors.required">* Destination est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputemail">Email :</label></div>
+                  <div class="col-sm-8">
+                    <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && email.errors}"
+                      [(ngModel)]="registerCompagnyData.email" required name="email" class="form-control"
+                      id="exampleInputemail" aria-describedby="email" placeholder="Enter email">
+                    <div *ngIf="submitted && email.errors" class="invalid-feedback">
+                      <div *ngIf="email.errors.required">* Email est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4"> <label for="exampleInputconfig">Configuration :</label></div>
+                  <div class="col-sm-8">
+                    <select id="exampleInputconfig" formControlName="configuration"
+                      [ngClass]="{ 'is-invalid': submitted && configuration.errors}" name="config" class="form-control"
+                      [(ngModel)]="registerCompagnyData.configuration.id">
+                      <option value="" selected>Choisir une configuration</option>
+                      <option *ngFor="let config of listConfigurations" [value]="config.id">{{config.smtpserver}}
+                      </option>
+                    </select>
+                    <div *ngIf="submitted && configuration.errors" class="invalid-feedback">
+                      <div *ngIf="configuration.errors.required">* Configuration est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="exampleInputmodele">Modele Mail :</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <select formControlName="modele" [ngClass]="{ 'is-invalid': submitted && modele.errors}"
+                      id="exampleInputmodele" name="modele" class="form-control"
+                      [(ngModel)]="registerCompagnyData.modele.id">
+                      <option selected>Choisir un modele</option>
+                      <option *ngFor="let modele of listModeles" [value]="modele.id">{{modele.nom}}</option>
+                    </select>
+                    <div *ngIf="submitted && modele.errors" class="invalid-feedback">
+                      <div *ngIf="modele.errors.required">* Modele Mail est obligatoire</div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="form-group">
+
+                <label for="exampleInputmodenvoie">Mode d'envoie :</label>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <input type="radio" (change)="updateFormControl()" formControlName="mode"
+                      [ngClass]="{ 'is-invalid': submitted && mode.errors}" id="exampleInputSynchrone" name="modeEnvoie"
+                      [(ngModel)]="registerCompagnyData.modeEnvoie" value="Synchrone">
+                    <label for="exampleInputSynchrone" style=" margin-left: 20px;">Synchrone</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="radio" formControlName="mode" (change)="updateFormControl()"
+                      [ngClass]="{ 'is-invalid': submitted && mode.errors}" id="exampleInputAsynchrone"
+                      name="modeEnvoie" [(ngModel)]="registerCompagnyData.modeEnvoie" value="Asynchrone">
+                    <label for="exampleInputAsynchrone" style=" margin-left: 20px;">Asynchrone</label>
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="registerCompagnyData.modeEnvoie === 'Asynchrone'">
+                <hr>
+                <h2>Planification</h2>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-4"> <label for="exampleInputdateenv">Date d'envoie :</label></div>
+                    <div class="col-sm-8">
+                      <input type="datetime-local" formControlName="dateEnvoie"
+                        [ngClass]="{ 'is-invalid': submitted && dateEnvoie.errors}"
+                        [ngModel]="registerCompagnyData.planification.dateenv | date:'yyyy-MM-ddTHH:mm'"
+                        (ngModelChange)="registerCompagnyData.planification.dateenv=$event" name="dateen"
+                        class="form-control" id="exampleInputdateen" aria-describedby="dateen"
+                        placeholder="Enter date envoie">
+                      <div *ngIf="submitted && dateEnvoie.errors" class="invalid-feedback">
+                        <div *ngIf="dateEnvoie.errors.required">* Date d'envoie est obligatoire</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-4"> <label for="exampleInputdateenv">Nombre de repetition :</label></div>
+                    <div class="col-sm-8">
+                      <input type="number" formControlName="repetition"
+                        [ngClass]="{ 'is-invalid': submitted && repetition.errors}"
+                        [(ngModel)]="registerCompagnyData.planification.repetetion" name="repetition"
+                        class="form-control" id="exampleInputrepetition" aria-describedby="repetition"
+                        placeholder="Enter nombre repetition d'envoie">
+                      <div *ngIf="submitted && repetition.errors" class="invalid-feedback">
+                        <div *ngIf="repetition.errors.required">* Nombre de repetition est obligatoire</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <hr>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" #modalCloseUpdate class="btn btn-danger" data-dismiss="modal">Fermer</button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Vous voulez vraiment supprimer cette campagne mailing ?</h5>
+
+            <button type="button" #modalDeleteClose class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="deleteCampagneMailing()">Supprimer</button>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>

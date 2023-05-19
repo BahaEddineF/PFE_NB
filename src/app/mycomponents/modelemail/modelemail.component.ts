@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Modele } from 'app/models/Modele';
 import { ModeleService } from 'app/services/modele.service';
@@ -13,7 +13,7 @@ export class ModelemailComponent implements OnInit {
   modeleForUpdate : Modele;
   constructor(private modeleService:ModeleService) { }
   registerModeleData = {} as any;
-
+  @ViewChild('myckeditor') ckeditor: any;
   ngOnInit(): void {
 
     this.modeleService.AllModele().subscribe(

@@ -39,7 +39,12 @@ export class CompagnymailingService {
     return this.httpclient.post<any>(this.apiUrl+"/addCampagneMailingWithConfigAndModele", config);
   }
   
-  addCampagneMailingWithConfigAndModeleAndPlanification(config:CampagneMailing){
-    return this.httpclient.post<any>(this.apiUrl+"/addCampagneMailingWithConfigAndModeleAndPlanification", config);
+  saveCampagneMailing(model:CampagneMailing){
+    return this.httpclient.post<any>(this.apiUrl+"/saveCampagneMailing", model);
+  }
+
+  sendSynchronousMail(model:CampagneMailing)
+  {
+      return this.httpclient.post<any>(this.apiUrl+"/sendSynchronousMail",model);
   }
 }

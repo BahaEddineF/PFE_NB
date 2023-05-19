@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Configuration } from 'app/models/Configuration';
 import { ConfigurationService } from 'app/services/configuration.service';
 import { ToastrService } from 'ngx-toastr';
-
 
 
 @Component({
@@ -14,7 +13,10 @@ export class ConfigurationlayoutComponent implements OnInit {
   listConfigurations: Configuration[];
   registerConfigData = {} as any;
   configForUpdate: Configuration;
-  constructor(private configService: ConfigurationService, private toastr: ToastrService) { }
+  configurationId:number;
+  @ViewChild('modalDeleteClose') modalDeleteClose;
+  constructor(private configService: ConfigurationService,
+     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.configService.AllConfiguration().subscribe(
@@ -23,23 +25,38 @@ export class ConfigurationlayoutComponent implements OnInit {
     );
 
   }
+
   fermer() {
     // activer le bouton "close"
     $('.close').click(() => {
       $('#configModal').modal('hide');
     });
   }
+
   onIconClickLaunch(event: any) {
     alert("hii")
   }
 
-  onIconClickDelete(id: number) {
-    if (window.confirm('Confirmer la supression')) {
-      this.configService.DeleteConfiguration(id).subscribe(
-        data => { alert("suppresion avec succès"); location.reload(); },
-        error => { alert('suppression erronée'); }
-      );
-    }
+  AllConfiguration()
+  {
+    this.configService.AllConfiguration().subscribe(
+      data => {this.listConfigurations = data},
+      error => {alert("Probléme d'affichage la liste des Configurations")}
+    );
+  }
+
+  deleteConfiguration() {
+    this.configService.DeleteConfiguration(this.configurationId).subscribe(
+      res => {
+        this.AllConfiguration();
+      } , error => {} , () => {
+  
+        this.cancel();
+        this.toastr.success( 'Configuration  a été supprimée' ,'Succès',{
+          timeOut: 3000,
+        })
+      }
+    )
   }
 
   addConfiguration() {
@@ -48,16 +65,11 @@ export class ConfigurationlayoutComponent implements OnInit {
 
         this.toastr.success('SOFTMAILS', 'Ajout de configuration validé !', { timeOut: 5000, closeButton: true });
        //!TO DO method get all conf 
-        location.reload();
-        //.onTap.subscribe(() => {   location.reload(); } );   
-        ;
       },
       err => { this.toastr.error('SOFTMAILS', 'Suppresion de configuration validé !', { timeOut: 5000, closeButton: true }) }
     );
 
   }
-
-
 
   onClick() {
     // Affiche une alerte
@@ -77,8 +89,21 @@ export class ConfigurationlayoutComponent implements OnInit {
 
   updateConfiguration() {
     this.configService.UpdateConfiguration(this.configForUpdate).subscribe(
-      data => { alert("Modification de configuration validé"); window.location.reload() },
+      data => { alert("Modification de configuration validé"); },
       err => { alert("Modification échoué"); console.log(this.registerConfigData) }
     );
   }
+  cancel()
+  {
+    this.configurationId = undefined;
+
+    this.modalDeleteClose.nativeElement.click();
+  }
+
+  openDeleteModal(id:number)
+{
+  $('#exampleModalDelete').modal('show');
+  this.configurationId = id;
 }
+}
+

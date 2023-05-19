@@ -1,0 +1,124 @@
+<!--<span [ngStyle]="{'color': updateForCompagny.etat == 0 ? 'yellow' : updateForCompagny.etat == 1 ? 'green' : 'red'}">
+  {{ updateForCompagny.etat == 0 ? 'Encours' : updateForCompagny.etat == 1 ? 'Envoyé' : 'Suspendu' }}
+</span>
+  
+        
+                  <form #formCompagnyUp="ngForm" (ngSubmit) = "updateCompagny()" >
+                      <div class="row">
+                         
+                          <div class="col-sm-3">
+                              <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Nom :" [(ngModel)]="updateForCompagny.nom" name="nom" id="nom" type="text">
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                              <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Email :" type="email" [(ngModel)]="updateForCompagny.email" name="email" id="email" type="text" >
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                                <input matInput type="text" placeholder="Destinataire :"  [(ngModel)]="updateForCompagny.destinataire"  name="destinataire" id="destinataire" type="text">
+                              </mat-form-field>
+                          </div>
+                      </div>
+                     
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <input type="radio" name="modeEnvoie" id="Synchrone" [checked]="updateForCompagny.modeEnvoie === 'Synchrone'" (change)="updateForCompagny.modeEnvoie = 'Synchrone'">
+                        <label class="form-check-label" style="margin-left: 20px;" for="Synchrone">Synchrone</label>
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="radio" name="modeEnvoie" id="Asynchrone" [checked]="updateForCompagny.modeEnvoie === 'Asynchrone'" (change)="updateForCompagny.modeEnvoie = 'Asynchrone'">
+                        <label class="form-check-label" style="margin-left: 20px;" for="Asynchrone">Asynchrone</label>
+                      </div>
+                    </div>
+                <hr>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label for="exampleInputconfig2">Configuration :</label>
+                      </div>
+                      <div class="col-sm-8">
+                        <select name="configSelect" class="form-control"  [(ngModel)]="updateForCompagny.configuration.id"  >
+                      
+                          <option *ngFor="let config of listConfigurationsForUpdate" [value]="config.id" >{{config.smtpserver}}</option>
+                       
+                         
+                        </select>
+                      </div>
+                    </div>
+                    <hr>
+                      <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                              <input matInput name="portnum" id="portnum" placeholder="Port" type="number"  [(ngModel)]="updateForCompagny.configuration.port"disabled >
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Smtp Server" name="Smtp" id="Smtp" type="text"[(ngModel)]="updateForCompagny.configuration.smtpserver" disabled >
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="URL" name="url" id="url" type="text" [(ngModel)]="updateForCompagny.configuration.url" disabled>
+                            </mat-form-field>
+                          </div>
+                      </div>
+
+
+                      <div class="row">Modele de l'email :</div>
+                      <div class="row">
+                        <div class="col-sm-3">
+                       
+                    
+
+                          <mat-form-field class="example-full-width">
+                            <select name="modeleSelect" class="form-control"  [(ngModel)]="updateForCompagny.modele.id">
+                              <option *ngFor="let mod of listModelesForUpdate" [value]="mod.id" [selected]="mod.id === updateForCompagny.modele.id">{{mod.nom}}</option>
+                            </select>
+                         
+                          </mat-form-field>
+                      
+                      </div>
+                      </div>
+                      <!--Modele-->
+                      <div class="row">
+                        <div class="col-sm-4">Sujet :</div>
+                        <div class="col-sm-8" >{{updateForCompagny.modele.sujet}}</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">Contenu :</div>
+                        
+                        <div class="col-lg-12" [innerHTML]="updateForCompagny.modele.contenu"></div>
+                       <!-- <div class="col">{{updateForCompagny.modele.contenu}}</div> -->
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">Signature :</div>
+                        <div class="col-sm-8">{{updateForCompagny.modele.signature}}</div>
+                      </div>
+
+
+
+
+
+
+
+                      <div class="row">
+                          <div class="col-md-12">
+                            <label>About Me</label>
+                            <mat-form-field class="example-full-width">
+                               <textarea matInput placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>
+                             </mat-form-field>
+                              <!-- <div class="form-group">
+
+                                  <div class="form-group">
+                                      <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
+                                      <textarea class="form-control" rows="5"></textarea>
+                                  </div>
+                              </div> -->
+                          </div>
+                      </div>
+                      <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Campagne </button>
+                      <div class="clearfix"></div>
+                  </form>-->
