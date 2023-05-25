@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CompagnymailingService } from 'app/services/compagnymailing.service';
+import { UserService } from 'app/services/userservice.service';
 import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +9,15 @@ import Chart from 'chart.js/auto';
 })
 export class DashboardComponent implements OnInit {
   public chart: any;
-  constructor() { }
+    nbrUsers=0;
+    nbrCampagnes=0;
+
+  constructor(private userService:UserService , private campagneMailingService:CompagnymailingService) { }
 
   ngOnInit() {
-    this.createChart()
+    this.createChart();
+    this.countUsers();
+    this.countCampagnes();
   }
 
   createChart()
@@ -18,12 +25,12 @@ export class DashboardComponent implements OnInit {
     this.chart = new Chart("MyChart", {
       type:'doughnut',
       data: {
-      labels: ['Compagne accepté ', 'Compagne suspendu', 'Compagne en attente'],
+      labels: ['Compagne envoyée ', 'Compagne en attente'],
       datasets: [
         {
  
-          data:[30,50,20],
-          backgroundColor:['green', 'red', 'yellow']
+          data:[30,20],
+          backgroundColor:['green', 'yellow']
         }
       ]
     } ,
@@ -42,5 +49,19 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  countUsers()
+  {
+    this.userService.countUsers().subscribe(
+      res => {
+        this.nbrUsers=res;
+      })
+  }
 
+  countCampagnes()
+  {
+    this.campagneMailingService.countCampagneMailings().subscribe(
+      res => {
+        this.nbrCampagnes=res;
+      })
+  }
 }

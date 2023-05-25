@@ -9,7 +9,6 @@ import { CompagnymailingService } from 'app/services/compagnymailing.service';
 import { ConfigurationService } from 'app/services/configuration.service';
 import { ModeleService } from 'app/services/modele.service';
 import { RoleService } from 'app/services/role.service';
-import { data } from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

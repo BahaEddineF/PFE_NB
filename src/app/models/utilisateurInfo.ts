@@ -3,6 +3,7 @@ export class UtilisateurInfo {
     nom: string ;
     prenom:string;
     login: string;
+    email:string;
     dateDeNaissance: Date;
     active:boolean ;
 }

@@ -6,6 +6,7 @@ import { UserService } from 'app/services/userservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { Utilisateur } from 'app/models/utilisateur';
 import { UtilisateurInfo } from 'app/models/utilisateurInfo';
+import { UpdateUtilisateurComponent } from '../update-utilisateur/update-utilisateur.component';
 
 @Component({
   selector: 'users',
@@ -67,7 +68,14 @@ get login() {return this.formAddUSER.get("login")};
 
   openModalUpdateUtilisateur(id:number)
   {
-    
+    const dialogRef = this.dialog.open(UpdateUtilisateurComponent, {
+      data: id,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getAllUser()
+    });
   }
 
   openModalBlockUtilisateur(id:number)
@@ -112,6 +120,7 @@ get login() {return this.formAddUSER.get("login")};
       }
     )
   }
+  
 
   cancel()
   {

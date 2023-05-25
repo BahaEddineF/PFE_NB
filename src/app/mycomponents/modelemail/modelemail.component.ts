@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Modele } from 'app/models/Modele';
 import { ModeleService } from 'app/services/modele.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'modelemail',
   templateUrl: './modelemail.component.html',
@@ -11,16 +12,16 @@ export class ModelemailComponent implements OnInit {
   public Editor = ClassicEditor;
   listModeles : Modele[];
   modeleForUpdate : Modele;
-  constructor(private modeleService:ModeleService) { }
+  constructor(private modeleService:ModeleService,
+    private toastr: ToastrService) { }
   registerModeleData = {} as any;
   @ViewChild('myckeditor') ckeditor: any;
   ngOnInit(): void {
 
     this.modeleService.AllModele().subscribe(
       data => {this.listModeles = data},
-      error => {alert("Probléme d'affichage la liste des modeles")}
-    );
-
+      error => {this.toastr.error("Echec d'affiche de les modeles  ", 'Echec'), {
+        timeOut: 3000,}})
   }
   
   openModal() {
@@ -42,9 +43,8 @@ export class ModelemailComponent implements OnInit {
    addModele(){
     this.modeleService.AddModele(this.registerModeleData).subscribe(
       data => { 
-        alert("Ajout de configuration validé");
-        location.reload();},
-      err => {alert("ajout échoué");console.log(this.registerModeleData)}
+        this.toastr.success('Success', 'Ajout de modele validé !', { timeOut: 5000, closeButton: true });;},
+      err => { this.toastr.error('SOFTMAILS', 'Ajout de configuration anullée !', { timeOut: 5000, closeButton: true })}
     );
 
    }
@@ -58,7 +58,7 @@ export class ModelemailComponent implements OnInit {
   onIconClickDelete(id: number){
     if (window.confirm('Confirmer la supression'+id)){
       this.modeleService.DeleteModele(id).subscribe(
-        data => {alert("suppresion avec succès");location.reload(); },
+        data => {alert("suppresion avec succès"); },
         error => {alert('suppression erronée');}
       );
     }

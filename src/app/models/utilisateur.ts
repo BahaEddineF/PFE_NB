@@ -1,3 +1,4 @@
+import { Role } from './role';
 export class Utilisateur {
     id: number;
     nom: string ;
@@ -7,6 +8,7 @@ export class Utilisateur {
     motdepasse: string;
     datenaissance: Date;
     active:boolean ;
+    role:string;
    
     
     constructor()

@@ -41,7 +41,8 @@ export class ConfigurationlayoutComponent implements OnInit {
   {
     this.configService.AllConfiguration().subscribe(
       data => {this.listConfigurations = data},
-      error => {alert("Probléme d'affichage la liste des Configurations")}
+      error => { this.toastr.error("Echec d'affiche de les configurations  ", 'Echec'), {
+        timeOut: 3000,}},
     );
   }
 
@@ -62,14 +63,8 @@ export class ConfigurationlayoutComponent implements OnInit {
   addConfiguration() {
     this.configService.AddConfiguration(this.registerConfigData).subscribe(
       data => {
-
         this.toastr.success('SOFTMAILS', 'Ajout de configuration validé !', { timeOut: 5000, closeButton: true });
-       //!TO DO method get all conf 
-      },
-      err => { this.toastr.error('SOFTMAILS', 'Suppresion de configuration validé !', { timeOut: 5000, closeButton: true }) }
-    );
-
-  }
+      })}
 
   onClick() {
     // Affiche une alerte
@@ -89,9 +84,11 @@ export class ConfigurationlayoutComponent implements OnInit {
 
   updateConfiguration() {
     this.configService.UpdateConfiguration(this.configForUpdate).subscribe(
-      data => { alert("Modification de configuration validé"); },
-      err => { alert("Modification échoué"); console.log(this.registerConfigData) }
-    );
+      data => { this.toastr.success("Success de modifier la configuration ", 'Success'), {
+        timeOut: 3000,}},
+      err => { this.toastr.error("Echec de modifier la configuration  ", 'Echec'), {
+        timeOut: 3000, }}
+    )
   }
   cancel()
   {

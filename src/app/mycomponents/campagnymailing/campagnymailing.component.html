@@ -16,7 +16,6 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Destinataire</th>
                 <th scope="col">ModeEnvoi</th>
@@ -26,7 +25,6 @@
             </thead>
             <tbody *ngFor="let compagny of listCompagny;index as i">
               <tr>
-                <th scope="row">{{i}}</th>
                 <td>{{compagny.nom}}</td>
                 <td>
                   {{compagny.destinataire}}
@@ -38,8 +36,6 @@
                   </span>
                 </td>
                 <td>
-                  <i class="material-icons" style="color: green;"
-                    (click)="openModalUpdateCompagny(compagny.id)">visibility</i>
                   <i class="material-icons" style="color: green;"
                     (click)="openModalUpdateCompagny(compagny.id)">edit</i>
                   <i class="material-icons" style="color: red;" (click)="openDeleteModal(compagny.id)">delete</i>
@@ -233,8 +229,6 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modifier Compagny Mailling</h5>
-
-
           </div>
           <div class="modal-body">
             <form [formGroup]="formCompagneMailing" (ngSubmit)="saveCompagny()">

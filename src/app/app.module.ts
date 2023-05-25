@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -13,6 +13,7 @@ import { UpadateUseComponent } from './upadate-use/upadate-use.component';
 import { NgChartsModule } from 'ng2-charts';
 import { UpdateUtilisateurComponent } from './mycomponents/update-utilisateur/update-utilisateur.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     
     
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS , useClass:AuthInterceptorService , multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

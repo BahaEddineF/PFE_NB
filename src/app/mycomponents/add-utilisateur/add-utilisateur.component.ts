@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Role } from 'app/models/role';
 import { Utilisateur } from 'app/models/utilisateur';
 import { UserService } from 'app/services/userservice.service';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +14,7 @@ export class AddUtilisateurComponent implements OnInit {
   formAddUtilisateur: FormGroup;
   utilisateur: Utilisateur = new Utilisateur();
   submitted: boolean = false;
+  roles:Role[] = [];
   constructor(
     private fbBuilder: FormBuilder,
     private userService: UserService,
@@ -26,7 +28,8 @@ export class AddUtilisateurComponent implements OnInit {
       login: ['', [Validators.required, Validators.minLength(2)]],
       dateDeNaissance: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      role: ['', Validators.required],
     });
   }
 
@@ -36,7 +39,9 @@ export class AddUtilisateurComponent implements OnInit {
   get login() { return this.formAddUtilisateur.get("login") };
   get dateDeNaissance() { return this.formAddUtilisateur.get("dateDeNaissance") };
   get email() { return this.formAddUtilisateur.get("email") };
-  get password() { return this.formAddUtilisateur.get("password") };
+  get password() { return this.formAddUtilisateur.get("password");};
+  get role() { return this.formAddUtilisateur.get("role");};
+
   addUtilisateur() {
 
     this.submitted = true;

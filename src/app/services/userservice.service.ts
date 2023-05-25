@@ -45,5 +45,12 @@ export class UserService {
 
     return this.httpclient.put<any>(this.apiUrl + "/unblockUser/" + id, null)
   }
+  countUsers()
+  {
+    return this.httpclient.get<any>(this.apiUrl + "/countUsers")
+  }
 
+  getUserProfile() {
+    return this.httpclient.get<UtilisateurInfo>(this.apiUrl + "/getUserProfile");
+  }
 }

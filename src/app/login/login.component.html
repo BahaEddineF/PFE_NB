@@ -2,7 +2,6 @@
     <div id="formContent">
       <!-- Tabs Titles -->
      <h2 class="active"> S'identifier </h2>
-       <!-- <h2 class="inactive underlineHover">Sign Up </h2>-->
   
       <!-- Icon -->
       <div class="fadeIn first">
@@ -10,16 +9,19 @@
       </div>
   
       <!-- Login Form -->
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Mot de Passe">
-        <input type="submit" class="fadeIn fourth" value="Log In" routerLink="/dashboard">
-      </form>
-  
-      <!-- Remind Passowrd 
-      <div id="formFooter">
-        <a class="underlineHover" href="#">Mot de Passe Oublié?</a>
-      </div> -->
-  
-    </div>
-  </div>
+      
+      <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+                    <label for="login"><b>Login</b></label>
+                    <input pInputText id="login" type="text" [ngClass]="{ 'is-invalid': submitted && login.errors}" formControlName="login"  class="form-control fadeIn second" name="login" >
+                    <div *ngIf="submitted && login.errors" class="invalid-feedback">
+                      <div *ngIf="login.errors.required">* Login est obligatoire</div>
+                </div>
+                    <label for="password"><b>Password</b></label>
+                    <input pInputText id="password" type="password"  class="form-control fadeIn third" [ngClass]="{ 'is-invalid': submitted && password.errors}" formControlName="password">
+                    <div *ngIf="submitted && password.errors" class="invalid-feedback">
+                      <div *ngIf="password.errors.required">* Password est obligatoire</div>
+                </div>
+                <button type="submit"label="Login" class="fadeIn fourth" >Login</button>
+  </form>
+</div>
+</div>

@@ -47,4 +47,8 @@ export class CompagnymailingService {
   {
       return this.httpclient.post<any>(this.apiUrl+"/sendSynchronousMail",model);
   }
+  countCampagneMailings()
+  {
+    return this.httpclient.get<any>(this.apiUrl+"/countCampagneMailings");
+  }
 }
