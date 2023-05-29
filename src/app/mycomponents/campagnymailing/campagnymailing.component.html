@@ -31,8 +31,8 @@
                 </td>
                 <td>{{compagny.modeEnvoie}}</td>
                 <td>
-                  <span [ngStyle]="{'color': compagny.etat == 0 ? 'orange' : compagny.etat == 1 ? 'green' : 'red'}">
-                    {{ compagny.etat == 0 ? 'Encours' : compagny.etat == 1 ? 'Envoyé' : 'Suspendu' }}
+                  <span [ngStyle]="{'color': compagny.etat == 0 ? 'green' : compagny.etat == 1 ? 'orange' : 'green'}">
+                    {{ compagny.etat == 0 ? 'Encours' : compagny.etat == 1 ? 'Envoyé' : 'Envoyé' }}
                   </span>
                 </td>
                 <td>

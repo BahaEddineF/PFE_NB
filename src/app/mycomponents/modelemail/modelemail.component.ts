@@ -43,12 +43,8 @@ export class ModelemailComponent implements OnInit {
    addModele(){
     this.modeleService.AddModele(this.registerModeleData).subscribe(
       data => { 
-        this.toastr.success('Success', 'Ajout de modele validé !', { timeOut: 5000, closeButton: true });;},
-      err => { this.toastr.error('SOFTMAILS', 'Ajout de configuration anullée !', { timeOut: 5000, closeButton: true })}
-    );
-
-   }
-
+        this.toastr.success('Success', 'Ajout de modele validé !', { timeOut: 5000, closeButton: true } );location.reload;;},
+    );}
  
   contenu: string;
   sauvegarderContenu(editeur) {
@@ -58,8 +54,7 @@ export class ModelemailComponent implements OnInit {
   onIconClickDelete(id: number){
     if (window.confirm('Confirmer la supression'+id)){
       this.modeleService.DeleteModele(id).subscribe(
-        data => {alert("suppresion avec succès"); },
-        error => {alert('suppression erronée');}
+        data => { this.toastr.success('Success', 'Supprission de modele validé !', { timeOut: 5000, closeButton: true })},
       );
     }
   }
@@ -72,8 +67,7 @@ export class ModelemailComponent implements OnInit {
 //
   updateModele(){
     this.modeleService.UpdateModele(this.modeleForUpdate).subscribe(
-      data => { alert("Modification de modele validé");location.reload();},
-      err => {alert("Modification échoué");console.log(this.modeleForUpdate)}
+      data =>{ this.toastr.success('Success', 'Modification de modele validé !', { timeOut: 5000, closeButton: true })},
     );
   }
 }

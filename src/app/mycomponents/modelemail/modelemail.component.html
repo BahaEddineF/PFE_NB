@@ -1,119 +1,123 @@
 <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-     
-        <button type="button" class="btn btn-primary alignBtn" (click)="openModal()">Nouveau Modele </button>
-        </div> 
-        <div class="card"> 
-          <div class="card-header card-header-success">
-                <h3 class="card-title">La liste des Modeles </h3>
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <button type="button" class="btn btn-primary alignBtn" (click)="openModal()">Nouveau Modele </button>
+    </div>
+    <div class="card">
+      <div class="card-header card-header-success">
+        <h3 class="card-title">La liste des Modeles </h3>
+      </div>
+      <div *ngFor="let modele of listModeles;index as i">
+        <hr style=" height: 2px;">
+        <div class="card" style="max-width: 80%; margin: 0 auto;">
+          <h5 class="card-header">
+            <p style="color: navy;">Objet : {{modele.sujet}}</p>
+          </h5>
 
-<div  *ngFor="let modele of listModeles;index as i">
-<hr style=" height: 2px;">
-<div class="card" style="max-width: 80%; margin: 0 auto;">
-    <h5 class="card-header"><p style="color: navy;">Objet :   {{modele.sujet}}</p> </h5>
-  
-    <!-- <ckeditor [editor]="Editor" data="Hello, world!"></ckeditor>-->
-    <div class="card-body">
-      <h5 class="card-title">Corps  : </h5>
-    
-      
-      <div class="card-text" [innerHTML]="modele.contenu"></div>
-      <tr>
-        <td> <h5>Signature : </h5></td>
-        <td><div>{{modele.signature}}</div></td>
-      </tr>
-     
-      
-      <a  (click)="openModalUpdateModele(modele.id)" class="btn btn-primary">Détails</a>
+          <!-- <ckeditor [editor]="Editor" data="Hello, world!"></ckeditor>-->
+          <div class="card-body">
+            <h5 class="card-title">Corps : </h5>
+            <div class="card-text" [innerHTML]="modele.contenu"></div>
+            <tr>
+              <td>
+                <h5>Signature : </h5>
+              </td>
+              <td>
+                <div>{{modele.signature}}</div>
+              </td>
+            </tr>
+            <a (click)="openModalUpdateModele(modele.id)" class="btn btn-primary">Détails</a>
+          </div>
+        </div>
+      </div>
+      <hr style=" height: 2px;">
     </div>
   </div>
 </div>
-<hr style=" height: 2px;">
 
-
-          
-        </div>
-    </div>
-  </div>
-  
-   <!-- Modal new Modele  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ajouter Modele</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form #formModele="ngForm" (ngSubmit) = "addModele()" >
-                <div class="form-group">
-                  <label for="exampleInputnom">Nom du modele :</label>
-                  <input type="text" [(ngModel)]="registerModeleData.nom" required name="nom" class="form-control" id="exampleInputnom" aria-describedby="nom" placeholder="Enter nom ">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputsujet">Sujet du modele :</label>
-                    <input type="text" [(ngModel)]="registerModeleData.sujet" required name="sujet" class="form-control" id="exampleInputsujet" aria-describedby="sujet" placeholder="Enter sujet ">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputcontenu">Contenu du modele :</label>
-                     <ckeditor #myckeditor    name="myckeditor" [(ngModel)]="registerModeleData.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
-                   
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputsignature">Signature du modele :</label>
-                    <input type="text" [(ngModel)]="registerModeleData.signature" required name="signature" class="form-control" id="exampleInputsignature" aria-describedby="signature" placeholder="Enter signature ">
-                </div>
-             
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-              </form>
-        </div>
+<!-- Modal new Modele  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter Modele</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formModele="ngForm" (ngSubmit)="addModele()">
+          <div class="form-group">
+            <label for="exampleInputnom">Nom du modele :</label>
+            <input type="text" [(ngModel)]="registerModeleData.nom" required name="nom" class="form-control"
+              id="exampleInputnom" aria-describedby="nom" placeholder="Enter nom ">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputsujet">Sujet du modele :</label>
+            <input type="text" [(ngModel)]="registerModeleData.sujet" required name="sujet" class="form-control"
+              id="exampleInputsujet" aria-describedby="sujet" placeholder="Enter sujet ">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputcontenu">Contenu du modele :</label>
+            <ckeditor #myckeditor name="myckeditor" [(ngModel)]="registerModeleData.contenu" [editor]="Editor" required
+              name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu ">
+            </ckeditor>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputsignature">Signature du modele :</label>
+            <input type="text" [(ngModel)]="registerModeleData.signature" required name="signature" class="form-control"
+              id="exampleInputsignature" aria-describedby="signature" placeholder="Enter signature ">
+          </div>
+          <button type="submit" class="btn btn-primary" registerModeleData>Submit</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-   <!-- Modal update Modele  -->
-<div *ngIf="modeleForUpdate" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Détails Modele</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          
-          </button>
-        </div>
-        <div class="modal-body">
-            <form #formModele="ngForm" (ngSubmit) = "updateModele()" >
-                <div class="form-group">
-                  <label for="exampleInputnom">Nom du modele :</label>
-                  <input type="text" [(ngModel)]="modeleForUpdate.nom" required name="nom" class="form-control" id="exampleInputnom" aria-describedby="nom" placeholder="Enter nom ">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputsujet">Sujet du modele :</label>
-                    <input type="text" [(ngModel)]="modeleForUpdate.sujet" required name="sujet" class="form-control" id="exampleInputsujet" aria-describedby="sujet" placeholder="Enter sujet ">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputcontenu">Contenu du modele :</label>
-                     <ckeditor #myckeditor   name="myckeditor"  [(ngModel)]="modeleForUpdate.contenu"  [editor]="Editor" required name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu "  ></ckeditor>
-                   
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputsignature">Signature du modele :</label>
-                    <input type="text" [(ngModel)]="modeleForUpdate.signature" required name="signature" class="form-control" id="exampleInputsignature" aria-describedby="signature" placeholder="Enter signature ">
-                </div>
-                
-               
-                <div class="card-body text-center">
-                            <button type="submit" class="btn btn-primary mr-2">Modifier</button>
-                          <button class="btn btn-danger"  (click)="onIconClickDelete(modeleForUpdate.id)" >Supprimer</button>
-                        </div>
-              </form>
+<!-- Modal update Modele  -->
+<div *ngIf="modeleForUpdate" class="modal fade" id="exampleModalUpdate" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Détails Modele</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formModele="ngForm" (ngSubmit)="updateModele()">
+          <div class="form-group">
+            <label for="exampleInputnom">Nom du modele :</label>
+            <input type="text" [(ngModel)]="modeleForUpdate.nom" required name="nom" class="form-control"
+              id="exampleInputnom" aria-describedby="nom" placeholder="Enter nom ">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputsujet">Sujet du modele :</label>
+            <input type="text" [(ngModel)]="modeleForUpdate.sujet" required name="sujet" class="form-control"
+              id="exampleInputsujet" aria-describedby="sujet" placeholder="Enter sujet ">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputcontenu">Contenu du modele :</label>
+            <ckeditor #myckeditor name="myckeditor" [(ngModel)]="modeleForUpdate.contenu" [editor]="Editor" required
+              name="contenu" id="exampleInputcontenu" aria-describedby="contenu" placeholder="Enter contenu ">
+            </ckeditor>
+
+          </div>
+          <div class="form-group">
+            <label for="exampleInputsignature">Signature du modele :</label>
+            <input type="text" [(ngModel)]="modeleForUpdate.signature" required name="signature" class="form-control"
+              id="exampleInputsignature" aria-describedby="signature" placeholder="Enter signature ">
+          </div>
+          <div class="card-body text-center">
+            <button type="submit" class="btn btn-primary mr-2">Modifier</button>
+            <button class="btn btn-danger" onIconClickDelete>Supprimer</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  </div>
-  </div>
+</div>
